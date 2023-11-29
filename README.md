@@ -7,12 +7,6 @@ This Python script automates the usage of a specific Discord bot command, in thi
 
 ---
 
-## Showcase
-
-<img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fgithub.com%2FDevuxious%2FOwo-Bot-Auto-Hunt&countColor=%23FF7F7F&labelColor=black" alt="Views"/>
-
----
-
 ## Features
 
 - **Captcha Detection:** Detects captcha prompts and automatically exits the program to handle verifications.
