@@ -65,12 +65,15 @@ To run the Owo Bot Auto Hunt, you will need the following:
 
 ## Usage
 
-1. Configure the program in the main.py file with the required variables:
+1. Configure the program in the config.py file with the required variables:
    ```
-   channel_id = ''  # Your channel id here to send commands to
-   command = 'wh'  # Command to send
-   delay = 15  # Delay between each command
-   token = ''  # Your token here
+   token = ''
+   channel_id = ''
+   randomize_delay = True
+   min_random_delay = 1
+   max_random_delay = 5
+   base_delay = 12
+   command = 'wh'
    ```
 
 ## Contributing
