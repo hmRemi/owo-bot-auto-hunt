@@ -45,7 +45,7 @@ class Util:
             last_sent_message = Util.get_last_message()
 
             # Check if the bot is asking for verification
-            if "Please complete your captcha" in last_sent_message:
+            if "Please complete your captcha" in last_sent_message or "are you a real human?" in last_sent_message:
                 Util.send_notification("OWO Automation | Verification Detected",
                                        "Please complete the captcha to continue.")
                 print(
@@ -116,6 +116,32 @@ class Util:
 
                 # Return the content of the last message
                 return last_message['content']
+        return None
+
+    # Get the last embed color from the channel
+    @staticmethod
+    def get_last_embed_color():
+        # Send the request
+        response = requests.get(Discord.url, headers=Discord.headers)
+
+        # Check if the response is 200
+        if response.status_code == 200:
+            # Get the messages
+            messages = response.json()
+
+            # Check if the messages is not empty
+            if messages:
+                # Get the last message
+                last_message = messages[0]
+
+                # Extract the embeds
+                embeds = last_message.get('embeds')
+
+                if embeds:
+                    # Get the color from the first embed (assuming there's only one)
+                    embed_color = embeds[0].get('color')
+                    return embed_color
+
         return None
 
     # Get the delay

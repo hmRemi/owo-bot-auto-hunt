@@ -38,7 +38,10 @@ while True:
     # Print send command message and wait 1 second
     print(
         f'\n{Fore.LIGHTBLACK_EX}[{Time.current_time}] | Sent command {Fore.LIGHTBLACK_EX}({Fore.LIGHTBLUE_EX}{Config.command}{Fore.LIGHTBLACK_EX}) {Fore.LIGHTBLACK_EX}({Fore.LIGHTBLUE_EX}{Config.channel_id}{Fore.LIGHTBLACK_EX}){Fore.RESET}')
-    time.sleep(1)
+    if Config.command == "wb":
+        time.sleep(8)
+    else:
+        time.sleep(1)
 
     # Check if the response is 200
     if response.status_code == 200:
@@ -47,14 +50,20 @@ while True:
 
         # Get the last message
         last_sent_message = Util.get_last_message()
+        last_sent_message_color = Util.get_last_embed_color()
 
         # Check if the last message is not None
         if last_sent_message:
             # Extract the info from the message
             Util.extract_info_from_message(last_sent_message)
         else:
-            # Print the error message
-            print(f'{Fore.LIGHTBLACK_EX}[{Time.current_time}] | {Fore.RED}Unable to fetch the last message.')
+            if last_sent_message_color == 65280:
+                print(f'{Fore.LIGHTBLACK_EX}[{Time.current_time}] | You won the battle')
+            elif last_sent_message_color == 16711680:
+                print(f'{Fore.LIGHTBLACK_EX}[{Time.current_time}] | You lost the battle')
+            else:
+                # Print the error message
+                print(f'{Fore.LIGHTBLACK_EX}[{Time.current_time}] | {Fore.RED}Unable to fetch the last message.')
     else:
         # Print the error message
         print(
