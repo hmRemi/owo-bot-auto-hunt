@@ -8,6 +8,7 @@ import requests
 import random
 import ctypes
 import time
+import sys
 import re
 
 class Util:
@@ -24,7 +25,7 @@ class Util:
         while True:
             # Update the title
             ctypes.windll.kernel32.SetConsoleTitleW(
-                f'OWO Bot | Total XP: {Statistics.total_xp} | Total Emojis: {Statistics.total_emojis} | Success: {Statistics.success} | Errors: {Statistics.errors} | Elapsed Time: {round(time.time() - Time.start_time)}s | Author: {Util.author}')
+                f'OWO Bot | Total XP: {Statistics.total_xp} | Total Emojis: {Statistics.total_emojis} | Battle Wins: {Statistics.battle_wins} | Success: {Statistics.success} | Errors: {Statistics.errors} | Elapsed Time: {round(time.time() - Time.start_time)}s | Author: {Util.author}')
 
     # Check for bot detection
     @staticmethod
@@ -32,7 +33,7 @@ class Util:
         while True:
             time.sleep(20)
             print(
-                f'\n{Fore.LIGHTBLACK_EX}[{Time.current_time}] | {Fore.LIGHTBLACK_EX}Checking for verification...{Fore.RESET}')
+                f'\n{Fore.LIGHTBLACK_EX}[{Time.current_time()}] | {Fore.LIGHTBLACK_EX}Checking for verification...{Fore.RESET}')
 
             owo_bot_id = 408785106942164992
             direct_messages_url = f'https://discord.com/api/v9/users/@me/channels'
@@ -49,11 +50,10 @@ class Util:
                 Util.send_notification("OWO Automation | Verification Detected",
                                        "Please complete the captcha to continue.")
                 print(
-                    f'{Fore.LIGHTBLACK_EX}[{Time.current_time}] | {Fore.RED}Verification detected in channel. Exiting...')
-                Discord.exit_flag = True
-                break
+                    f'{Fore.LIGHTBLACK_EX}[{Time.current_time()}] | {Fore.RED}Verification detected in channel. Exiting...')
+                sys.exit(0)
             else:
-                print(f'{Fore.LIGHTBLACK_EX}[{Time.current_time}] | Verification not detected in channel.')
+                print(f'{Fore.LIGHTBLACK_EX}[{Time.current_time()}] | Verification not detected in channel.')
 
             # Send the request to get the direct messages
             dm_check = requests.get(direct_messages_url, headers=Discord.headers, params=params)
@@ -86,16 +86,19 @@ class Util:
 
                                     # Check if the bot is asking for verification
                                     if "Beep Boop. Are you a real human?" in bot_message.get('content'):
+
+                                        #captcha_image = b64encode(await bot_message.get['attachment'].read()).decode(
+                                        #    "utf-8"
+                                        #)
+
                                         Util.send_notification("OWO Automation | Verification Detected",
                                                                "Please complete the captcha to continue.")
                                         print(
-                                            f'{Fore.LIGHTBLACK_EX}[{Time.current_time}] | {Fore.RED}Verification detected in dms. Exiting...')
-                                        Discord.exit_flag = True
-                                        break
+                                            f'{Fore.LIGHTBLACK_EX}[{Time.current_time()}] | {Fore.RED}Verification detected in dms. Exiting...')
+                                        sys.exit(0)
                                     else:
                                         print(
-                                            f'{Fore.LIGHTBLACK_EX}[{Time.current_time}] | Verification not detected in dms.')
-                                        Discord.exit_flag = False
+                                            f'{Fore.LIGHTBLACK_EX}[{Time.current_time()}] | Verification not detected in dms.')
                                         break
 
     # Get the last message from the channel
@@ -167,4 +170,4 @@ class Util:
         Statistics.total_xp += int(xp) if xp != "Not found" else 0
 
         print(
-            f'{Fore.LIGHTBLACK_EX}[{Time.current_time}] | Gathered Items (Emojis: {Fore.LIGHTBLUE_EX}{emojis}{Fore.LIGHTBLACK_EX} | XP: {Fore.LIGHTBLUE_EX}{xp}{Fore.LIGHTBLACK_EX}){Fore.RESET}')
+            f'{Fore.LIGHTBLACK_EX}[{Time.current_time()}] | Gathered Items (Emojis: {Fore.LIGHTBLUE_EX}{emojis}{Fore.LIGHTBLACK_EX} | XP: {Fore.LIGHTBLUE_EX}{xp}{Fore.LIGHTBLACK_EX}){Fore.RESET}')
